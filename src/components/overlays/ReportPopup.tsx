@@ -47,22 +47,17 @@ const TYPE_ICONS: Record<ReportType, string> = {
 export function ReportPopup() {
 
   const {
-
     reports,
-
     news,
-
     selectedReportId,
-
     selectedNewsId,
-
     setSelectedReportId,
-
     setSelectedNewsId,
-
     setDetailsModalOpen,
-
+    isReportDialogOpen,
   } = useMapStore();
+
+  if (isReportDialogOpen) return null;
 
 
 
@@ -116,7 +111,7 @@ export function ReportPopup() {
 
           exit={{ opacity: 0, y: 10 }}
 
-          className="absolute bottom-6 left-1/2 z-20 w-full max-w-sm -translate-x-1/2 px-4"
+          className="absolute bottom-24 left-1/2 z-30 w-full max-w-sm -translate-x-1/2 px-3 md:bottom-6 md:z-20 md:px-4"
 
         >
 
@@ -232,7 +227,7 @@ export function ReportPopup() {
 
           exit={{ opacity: 0, y: 10 }}
 
-          className="absolute bottom-6 left-1/2 z-20 w-full max-w-sm -translate-x-1/2 px-4"
+          className="absolute bottom-24 left-1/2 z-30 w-full max-w-sm -translate-x-1/2 px-3 md:bottom-6 md:z-20 md:px-4"
 
         >
 

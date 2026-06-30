@@ -458,11 +458,32 @@ export function ReportDialog() {
   if (!isReportDialogOpen) return null;
 
   return (
-    <div
+    <>
+      {pinPickActive && (
+        <div className="pointer-events-auto fixed inset-x-3 bottom-[4.75rem] z-50 flex gap-2 md:hidden">
+          <Button variant="secondary" className="flex-1 shadow-lg" onClick={handleClose}>
+            Cancel report
+          </Button>
+        </div>
+      )}
+      {!pinPickActive && (
+        <button
+          type="button"
+          aria-label="Close report form"
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          onClick={handleClose}
+        />
+      )}
+      <div
       data-report-panel
       role="dialog"
       aria-labelledby="civic-report-title"
-      className="pointer-events-auto absolute bottom-20 right-3 top-16 z-30 max-h-[calc(100vh-6rem)] w-[min(100%,22rem)] overflow-y-auto rounded-xl border border-border bg-background p-5 shadow-2xl sm:w-96"
+      className={cn(
+        "pointer-events-auto z-50 overflow-y-auto border border-border bg-background p-4 shadow-2xl sm:p-5",
+        "fixed inset-x-0 bottom-0 max-h-[min(88dvh,100%)] rounded-t-2xl pb-[max(1rem,env(safe-area-inset-bottom))]",
+        "md:absolute md:inset-x-auto md:bottom-20 md:right-3 md:top-16 md:max-h-[calc(100vh-6rem)] md:w-96 md:rounded-xl md:pb-5",
+        pinPickActive && "max-md:hidden"
+      )}
     >
       <button
         type="button"
@@ -811,5 +832,6 @@ export function ReportDialog() {
           </form>
         )}
     </div>
+    </>
   );
 }

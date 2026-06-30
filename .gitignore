@@ -34,3 +34,4 @@ node_modules/.prisma
 # OS
 .DS_Store
 Thumbs.db
+.env*

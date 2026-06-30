@@ -98,6 +98,12 @@ html, body, #__next {
   overflow: hidden;
 }
 
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 /* Readable scrollbars in side panels */
 .map-panel ::-webkit-scrollbar,
 .overflow-y-auto::-webkit-scrollbar {

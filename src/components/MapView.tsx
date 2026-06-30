@@ -32,6 +32,12 @@ import {
 } from "lucide-react";
 import { activeMissingCount } from "@/lib/missing-persons";
 import { cn } from "@/lib/utils";
+import {
+  MobileMapNav,
+  MobileSheetBackdrop,
+  MobileSheetHeader,
+  MapLayersList,
+} from "@/components/overlays/MobileMapNav";
 
 export function MapView() {
   useReportsPolling();
@@ -53,6 +59,8 @@ export function MapView() {
     isReportDialogOpen,
     reportLocationMode,
     reportLocationPinned,
+    mobileSheet,
+    setMobileSheet,
   } = useMapStore();
 
   const [activeTab, setActiveTab] = useState<"COMMAND_CENTER" | "GOV_ANALYTICS" | "CITIZEN_HUB">("COMMAND_CENTER");
@@ -127,7 +135,7 @@ export function MapView() {
 
   return (
     <div className="relative flex h-screen w-screen flex-col overflow-hidden bg-background text-foreground font-sans">
-      <header className="relative z-30 flex h-14 w-full shrink-0 items-center justify-between gap-4 border-b border-border bg-card/95 px-4 backdrop-blur-md pointer-events-auto sm:px-6">
+      <header className="relative z-30 flex h-12 w-full shrink-0 items-center justify-between gap-2 border-b border-border bg-card/95 px-2 backdrop-blur-md pointer-events-auto sm:h-14 sm:gap-4 sm:px-6">
         <div className="flex min-w-0 items-center gap-3">
           <div className="flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-3 py-1.5">
             <Radio className="h-4 w-4 shrink-0 text-primary" />
@@ -141,32 +149,32 @@ export function MapView() {
           </span>
         </div>
 
-        <div className="flex items-center rounded-xl border border-border bg-secondary/80 p-1">
+        <div className="flex items-center rounded-xl border border-border bg-secondary/80 p-0.5 sm:p-1">
           <Button
             onClick={() => setActiveTab("COMMAND_CENTER")}
             variant={activeTab === "COMMAND_CENTER" ? "secondary" : "ghost"}
             size="sm"
-            className="h-8 rounded-lg px-3 text-xs font-medium sm:px-4"
+            className="h-7 rounded-lg px-2 text-xs font-medium sm:h-8 sm:px-4"
           >
-            <Building2 className="mr-1.5 h-3.5 w-3.5" />
+            <Building2 className="h-3.5 w-3.5 sm:mr-1.5" />
             <span className="hidden sm:inline">Map</span>
           </Button>
           <Button
             onClick={() => setActiveTab("GOV_ANALYTICS")}
             variant={activeTab === "GOV_ANALYTICS" ? "secondary" : "ghost"}
             size="sm"
-            className="h-8 rounded-lg px-3 text-xs font-medium sm:px-4"
+            className="h-7 rounded-lg px-2 text-xs font-medium sm:h-8 sm:px-4"
           >
-            <FileBarChart className="mr-1.5 h-3.5 w-3.5" />
+            <FileBarChart className="h-3.5 w-3.5 sm:mr-1.5" />
             <span className="hidden sm:inline">Analytics</span>
           </Button>
           <Button
             onClick={() => setActiveTab("CITIZEN_HUB")}
             variant={activeTab === "CITIZEN_HUB" ? "secondary" : "ghost"}
             size="sm"
-            className="h-8 rounded-lg px-3 text-xs font-medium sm:px-4"
+            className="h-7 rounded-lg px-2 text-xs font-medium sm:h-8 sm:px-4"
           >
-            <UserCheck className="mr-1.5 h-3.5 w-3.5" />
+            <UserCheck className="h-3.5 w-3.5 sm:mr-1.5" />
             <span className="hidden sm:inline">Citizens</span>
           </Button>
         </div>
@@ -174,7 +182,7 @@ export function MapView() {
         <Button
           onClick={() => setReportDialogOpen(true)}
           size="sm"
-          className="h-8 shrink-0 text-xs font-semibold"
+          className="h-7 shrink-0 px-2.5 text-xs font-semibold sm:h-8"
         >
           Report
         </Button>
@@ -193,9 +201,28 @@ export function MapView() {
 
           {activeTab === "COMMAND_CENTER" && (
             <>
-              <aside className="map-panel pointer-events-auto absolute bottom-16 left-3 top-16 z-20 flex w-[min(100%,20rem)] flex-col gap-3 p-4 sm:left-4 sm:top-[4.5rem] sm:bottom-20 sm:w-80">
-                  <div className="map-panel-header flex items-center justify-between">
+              <MobileSheetBackdrop />
+
+              <aside
+                className={cn(
+                  "map-panel pointer-events-auto z-40 flex flex-col gap-3 overflow-hidden p-4",
+                  mobileSheet === "incidents"
+                    ? "fixed inset-x-2 bottom-[4.75rem] top-[3.25rem] max-h-none"
+                    : "hidden",
+                  "md:absolute md:inset-auto md:bottom-20 md:left-4 md:top-[4.5rem] md:z-20 md:flex md:w-80"
+                )}
+              >
+                  <MobileSheetHeader
+                    title="Live incidents"
+                    onClose={() => setMobileSheet(null)}
+                  />
+                  <div className="hidden map-panel-header items-center justify-between md:flex">
                     <h3 className="map-panel-title">Live incidents</h3>
+                    <span className="map-chip border-red-500/30 bg-red-500/15 text-red-300">
+                      {enrichedReports.length} active
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-end md:hidden">
                     <span className="map-chip border-red-500/30 bg-red-500/15 text-red-300">
                       {enrichedReports.length} active
                     </span>
@@ -308,8 +335,20 @@ export function MapView() {
                   </div>
                 </aside>
 
-              <aside className="map-panel pointer-events-auto absolute bottom-16 right-3 top-16 z-20 flex w-[min(100%,22rem)] flex-col gap-3 p-4 sm:right-4 sm:top-[4.5rem] sm:bottom-20 sm:w-96">
-                  <div className="map-panel-header">
+              <aside
+                className={cn(
+                  "map-panel pointer-events-auto z-40 flex flex-col gap-3 overflow-hidden p-4",
+                  mobileSheet === "copilot"
+                    ? "fixed inset-x-2 bottom-[4.75rem] top-[3.25rem] max-h-none"
+                    : "hidden",
+                  "md:absolute md:inset-auto md:bottom-20 md:right-4 md:top-[4.5rem] md:z-20 md:flex md:w-96"
+                )}
+              >
+                  <MobileSheetHeader
+                    title="CivicEye Copilot"
+                    onClose={() => setMobileSheet(null)}
+                  />
+                  <div className="hidden map-panel-header md:block">
                     <h3 className="map-panel-title flex items-center gap-2">
                       <Brain className="h-4 w-4" />
                       CivicEye Copilot
@@ -377,6 +416,19 @@ export function MapView() {
                   </form>
                 </aside>
 
+              {mobileSheet === "layers" && (
+                <aside className="map-panel pointer-events-auto fixed inset-x-2 bottom-[4.75rem] top-[3.25rem] z-40 flex flex-col gap-4 overflow-y-auto p-4 md:hidden">
+                  <MobileSheetHeader title="Map layers" onClose={() => setMobileSheet(null)} />
+                  <MapLayersList compact />
+                  <div className="border-t border-border/60 pt-3">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      Legend
+                    </p>
+                    <Legend embedded />
+                  </div>
+                </aside>
+              )}
+
                 {/* Overlays / Popups */}
                 <MapLayerPanel />
                 <RoadDetailPanel />
@@ -385,6 +437,7 @@ export function MapView() {
                 <ReportMapPinHint />
                 <ReportDialog />
                 <MapControls />
+              <MobileMapNav />
               {mapAuthError && mapFallbackReason !== "config" && <MapErrorOverlay />}
             </>
           )}
@@ -396,7 +449,7 @@ export function MapView() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 15 }}
-              className="absolute inset-0 z-20 overflow-y-auto bg-background"
+              className="absolute inset-0 z-20 overflow-y-auto bg-background p-4 sm:p-6"
             >
               <GovAnalytics />
             </motion.div>
@@ -409,7 +462,7 @@ export function MapView() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 15 }}
-              className="absolute inset-0 z-20 overflow-y-auto bg-background"
+              className="absolute inset-0 z-20 overflow-y-auto bg-background p-4 sm:p-6"
             >
               <CitizenHub />
             </motion.div>
@@ -424,7 +477,7 @@ export function MapView() {
         onOpenChange={setDetailsModalOpen}
       />
 
-      <footer className="relative z-30 flex h-9 w-full shrink-0 items-center overflow-hidden border-t border-border bg-card/95 px-4 text-xs text-muted-foreground pointer-events-none sm:px-6">
+      <footer className="relative z-30 flex h-9 w-full shrink-0 items-center overflow-hidden border-t border-border bg-card/95 px-2 text-xs text-muted-foreground pointer-events-none sm:px-6">
         <div className="mr-4 flex shrink-0 items-center gap-1.5 font-medium text-primary">
           <Clock className="h-3.5 w-3.5" />
           <span>Updates</span>

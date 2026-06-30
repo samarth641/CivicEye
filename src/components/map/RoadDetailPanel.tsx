@@ -38,7 +38,7 @@ export function RoadDetailPanel() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 16 }}
-        className="map-panel pointer-events-auto absolute bottom-36 left-1/2 z-25 w-[min(100%,24rem)] -translate-x-1/2 p-4 sm:bottom-40"
+        className="map-panel pointer-events-auto absolute bottom-28 left-1/2 z-30 w-[min(100%,24rem)] -translate-x-1/2 p-4 md:bottom-40 md:z-25"
       >
         <div className="flex items-start justify-between gap-2">
           <div>

@@ -41,7 +41,7 @@ export function MapControls() {
     <motion.div
       initial={{ opacity: 0, x: 12 }}
       animate={{ opacity: 1, x: 0 }}
-      className="absolute right-[min(100%,23rem)] top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2 pointer-events-auto sm:right-[26rem]"
+      className="absolute right-3 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2 pointer-events-auto md:right-[26rem]"
     >
       <div className="map-control-stack">
         <Button

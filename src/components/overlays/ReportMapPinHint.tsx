@@ -24,7 +24,7 @@ export function ReportMapPinHint() {
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="pointer-events-none absolute left-1/2 top-[5.5rem] z-[45] w-[min(100%,28rem)] -translate-x-1/2 px-3"
+        className="pointer-events-none absolute left-1/2 top-[4.25rem] z-[45] w-[min(100%,28rem)] -translate-x-1/2 px-3 sm:top-[5.5rem]"
       >
         <div
           className={`rounded-xl border-2 px-4 py-3 shadow-2xl backdrop-blur-md ${
@@ -68,7 +68,7 @@ export function ReportMapPinHint() {
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="pointer-events-none absolute left-1/2 top-[5.5rem] z-[45] w-[min(100%,28rem)] -translate-x-1/2 px-3"
+        className="pointer-events-none absolute left-1/2 top-[4.25rem] z-[45] w-[min(100%,28rem)] -translate-x-1/2 px-3 sm:top-[5.5rem]"
       >
         <div className="rounded-xl border border-amber-500/40 bg-amber-950/85 px-4 py-3 shadow-2xl backdrop-blur-md">
           <div className="flex items-start gap-3">
@@ -90,7 +90,7 @@ export function ReportMapPinHint() {
     <motion.div
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="pointer-events-none absolute left-1/2 top-[5.5rem] z-[45] w-[min(100%,28rem)] -translate-x-1/2 px-3"
+      className="pointer-events-none absolute left-1/2 top-[4.25rem] z-[45] w-[min(100%,28rem)] -translate-x-1/2 px-3 sm:top-[5.5rem]"
     >
       <div className="rounded-xl border border-violet-500/40 bg-violet-950/85 px-4 py-3 shadow-2xl backdrop-blur-md">
         <div className="flex items-start gap-3">

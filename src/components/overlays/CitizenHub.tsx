@@ -104,7 +104,7 @@ export function CitizenHub() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 p-6 h-[calc(100vh-80px)] overflow-y-auto">
+    <div className="grid grid-cols-1 gap-4 p-4 min-h-0 h-full overflow-y-auto lg:grid-cols-5 sm:gap-6 sm:p-6">
       {/* Left Columns: Citizen reporting terminal */}
       <div className="lg:col-span-3 flex flex-col gap-6">
         {/* Voice Reporting terminal */}

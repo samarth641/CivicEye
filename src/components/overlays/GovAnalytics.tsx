@@ -58,7 +58,7 @@ export function GovAnalytics() {
   ];
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 p-6 h-[calc(100vh-80px)] overflow-y-auto font-sans">
+    <div className="grid grid-cols-1 gap-4 p-4 min-h-0 overflow-y-auto font-sans sm:gap-6 sm:p-6 xl:grid-cols-3 h-full">
       
       {/* Left Column: Charts and Performance */}
       <div className="xl:col-span-2 space-y-6">

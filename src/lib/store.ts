@@ -59,6 +59,8 @@ interface MapState {
   setReportLocationPinned: (pinned: boolean) => void;
   reportLocationMode: ReportLocationMode;
   setReportLocationMode: (mode: ReportLocationMode) => void;
+  mobileSheet: "incidents" | "copilot" | "layers" | null;
+  setMobileSheet: (sheet: MapState["mobileSheet"]) => void;
 }
 
 const defaultFilters: MapFilters = {
@@ -129,7 +131,13 @@ export const useMapStore = create<MapState>((set) => ({
   clearFlyTarget: () => set({ mapFlyTarget: null }),
   cityHealthIndex: 88,
   isReportDialogOpen: false,
-  setReportDialogOpen: (isReportDialogOpen) => set({ isReportDialogOpen }),
+  setReportDialogOpen: (isReportDialogOpen) =>
+    set((state) => ({
+      isReportDialogOpen,
+      ...(isReportDialogOpen
+        ? { mobileSheet: null, detailsModalOpen: false, selectedReportId: null, selectedNewsId: null }
+        : {}),
+    })),
   mapCenter: NAGPUR_CENTER,
   setMapCenter: (mapCenter) => set({ mapCenter }),
   mapAuthError: shouldSkipGoogleMaps(),
@@ -137,7 +145,11 @@ export const useMapStore = create<MapState>((set) => ({
   mapFallbackReason: shouldSkipGoogleMaps() ? "config" : null,
   setMapFallbackReason: (mapFallbackReason) => set({ mapFallbackReason }),
   detailsModalOpen: false,
-  setDetailsModalOpen: (detailsModalOpen) => set({ detailsModalOpen }),
+  setDetailsModalOpen: (detailsModalOpen) =>
+    set((state) => ({
+      detailsModalOpen,
+      ...(detailsModalOpen ? { mobileSheet: null } : {}),
+    })),
   selectedRoadId: null,
   setSelectedRoadId: (selectedRoadId) => set({ selectedRoadId }),
   reportPickLocation: null,
@@ -148,4 +160,6 @@ export const useMapStore = create<MapState>((set) => ({
   setReportLocationPinned: (reportLocationPinned) => set({ reportLocationPinned }),
   reportLocationMode: "ROAD",
   setReportLocationMode: (reportLocationMode) => set({ reportLocationMode }),
+  mobileSheet: null,
+  setMobileSheet: (mobileSheet) => set({ mobileSheet }),
 }));
