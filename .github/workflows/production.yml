@@ -1,0 +1,20 @@
+name: Production
+
+on:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: https://civiceye-nine.vercel.app
+    steps:
+      - uses: actions/checkout@v4
+      - name: Production live on Vercel
+        run: echo "https://civiceye-nine.vercel.app"
