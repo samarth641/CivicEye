@@ -1,0 +1,153 @@
+@import "leaflet/dist/leaflet.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 142 76% 36%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 142 76% 36%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 210 40% 98%;
+    --card: 224 40% 10%;
+    --card-foreground: 210 40% 98%;
+    --popover: 224 40% 10%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 142 70% 45%;
+    --primary-foreground: 144 80% 10%;
+    --secondary: 217 28% 16%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 28% 16%;
+    --muted-foreground: 215 16% 72%;
+    --accent: 217 28% 18%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 22% 22%;
+    --input: 217 22% 18%;
+    --ring: 142 70% 45%;
+  }
+}
+
+@layer components {
+  .map-panel {
+    @apply rounded-2xl border border-border/80 bg-card/95 text-card-foreground shadow-2xl backdrop-blur-xl;
+  }
+
+  .map-panel-header {
+    @apply border-b border-border/60 pb-3;
+  }
+
+  .map-panel-title {
+    @apply text-sm font-semibold tracking-wide text-primary;
+  }
+
+  .map-body-text {
+    @apply text-sm leading-relaxed text-foreground;
+  }
+
+  .map-muted-text {
+    @apply text-xs leading-snug text-muted-foreground;
+  }
+
+  .map-chip {
+    @apply inline-flex items-center rounded-full border border-border bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground;
+  }
+
+  .map-control-stack {
+    @apply flex flex-col rounded-xl border border-border bg-card/95 p-1 shadow-xl backdrop-blur-xl;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+html, body, #__next {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Readable scrollbars in side panels */
+.map-panel ::-webkit-scrollbar,
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+.map-panel ::-webkit-scrollbar-thumb,
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 999px;
+}
+
+.road-tooltip {
+  background: hsl(var(--card)) !important;
+  color: hsl(var(--foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  font-size: 12px !important;
+  font-weight: 600;
+  padding: 6px 10px !important;
+}
+
+@keyframes incident-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.65);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    transform: scale(1.08);
+  }
+}
+
+.incident-pulse {
+  animation: incident-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* Crosshair cursor while placing a report pin */
+body.report-pin-picking .leaflet-container {
+  cursor: crosshair !important;
+}
