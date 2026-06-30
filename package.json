@@ -11,7 +11,6 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:migrate": "node scripts/migrate-db.mjs",
     "postinstall": "prisma generate"
   },
   "dependencies": {
